@@ -16,16 +16,35 @@ class CatagoriesList(ListAPIView):
     
 class ItemList(ListAPIView):
     serializer_class = serializers.ItemSerializer
-    model = models.Item
+    queryset = models.Item.objects.all()
     
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        queryset = models.Item.objects.all()
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.kwargs.get('slug')
         if slug:
-            queryset = queryset.filter(category_slug=slug)
+            try:
+                category = models.Category.objects.get(slug = slug)
+                queryset = queryset.filter(category=category)
+            except category.DoesNotExist:
+                return HttpResponse("Bad request")
+                queryset = models.Item.objects.none()  # Return an empty list if the category doesn't exist.
         return queryset
-        
-    
+
+class ItemWithFiles(ListAPIView):
+    serializer_class = serializers.ItemWithFiles
+    queryset = models.ItemFile.objects.all()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.kwargs.get('slug')
+        if slug:
+            try:
+                item = models.Item.objects.get(slug = slug)  
+                queryset = queryset.filter(item = item)
+            except item.DoesNotExist:
+                queryset = models.ItemFile.objects.none()  # Return an empty list if the item doesn't exist.
+                return HttpResponse("Bad request")
+        return queryset
     
     

@@ -46,10 +46,35 @@ class ItemFile(models.Model):
     item = models.ForeignKey(Item,on_delete=models.PROTECT,verbose_name='Faýl elementini saýla')
     
     def __str__(self):
-        return self.name
+        return self.item.name
     
     class Meta:
         db_table = "files"
         verbose_name = 'Faýl'
         verbose_name_plural = 'Faýllar'
+
+
+class Order(models.Model):
+    username = models.CharField(max_length=50,blank=True,null=True,verbose_name='Sargyt ediji')
+    phone = models.CharField(max_length=25, verbose_name='telefon belgisi')
+    order_date = models.DateTimeField(auto_now_add=True , verbose_name='senesi')
+
+    def __str__(self):
+        return self.username
     
+    class Meta:
+        db_table = 'order'
+        verbose_name = 'sargyt'
+        verbose_name_plural= 'sargytlar'
+
+class OrderItem(models.Model):
+    item = models.ForeignKey(Item,on_delete=models.CASCADE,verbose_name='Element ady')
+    order = models.ForeignKey(Order,on_delete=models.CASCADE,verbose_name='Sargyt ediji')
+
+    def __str__(self):
+        return self.order.username
+    
+    class Meta:
+        db_table = 'orderitem'
+        verbose_name = 'sargyt edilen'
+        verbose_name_plural = 'sargyt edilenler'
