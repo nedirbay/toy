@@ -19,9 +19,16 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Item
         fields = ('id','name','category','img','slug')
-        
+
+
+class ItemSerializerWithPrice(serializers.ModelSerializer):
+    category = CategoryNameSerializer()
+    class Meta:
+        model = models.Item
+        fields = ('id','name','price','description','category','img','slug')
+      
 class ItemWithFiles(serializers.ModelSerializer):
-    item = ItemSerializer()
+    item = ItemSerializerWithPrice()
     class Meta:
         model = models.ItemFile
         fields = ('id','item','file')
