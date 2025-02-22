@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'ckeditor',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
