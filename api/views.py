@@ -11,6 +11,12 @@ from rest_framework.exceptions import ValidationError
 def index(request):
     return HttpResponse("<h1 style='text-align:center'>Home</h1>")
 
+class Banners(ListAPIView):
+    serializer_class = serializers.BannerSerializer
+    model = models.Banner
+    queryset = models.Banner.objects.all()
+
+
 class CatagoriesList(ListAPIView):
     serializer_class = serializers.CategorySerializer
     model = models.Category

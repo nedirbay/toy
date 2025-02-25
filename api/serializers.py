@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from . import models
 
-
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Banner
+        fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,5 +49,4 @@ class OrderSerializer(serializers.ModelSerializer):
         order_items = [models.OrderItem(order=order, item_id=item_id) for item_id in items_data]
         models.OrderItem.objects.bulk_create(order_items) 
         return order
-    
     

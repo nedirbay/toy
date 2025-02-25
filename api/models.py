@@ -2,6 +2,17 @@ from django.db import models
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 
+class Banner(models.Model):
+    img = models.ImageField(upload_to='banners/')
+
+    def __str__(self):
+        return self.img.url
+    
+    class Meta:
+        db_table = 'banners'
+        verbose_name = 'banner'
+        verbose_name_plural = 'bannerler'
+        
 class Category(models.Model):
     name = models.CharField(max_length=100,verbose_name="Kategoriýa ady")
     img = models.ImageField(upload_to='category_images/',  verbose_name='surat saýla')
