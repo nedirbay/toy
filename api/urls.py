@@ -6,4 +6,6 @@ urlpatterns = [
     path('categories/',views.CatagoriesList.as_view()),
     path('items/<slug:slug>',views.ItemList.as_view()),
     path('itemdetail/<slug:slug>',views.ItemWithFiles.as_view()),
+    path('orders/', views.OrderCreateView.as_view(), name='order-create'),
+
 ]

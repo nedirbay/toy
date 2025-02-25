@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from . import models
 from . import serializers
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 
@@ -41,5 +41,11 @@ class ItemWithFiles(ListAPIView):
         if not data.exists():  # Eğer hiç kayıt yoksa
             raise ValidationError({"Ýalňyşlyk": "Bu slug bilen item ýok!"})
         return data 
+
+
+#OrderCreateView ucin "Username", "phone" , "order_date", "orders list idlerini uratsan bolar"
+class OrderCreateView(CreateAPIView):
+    queryset = models.Order.objects.all()
+    serializer_class = serializers.OrderSerializer
     
     

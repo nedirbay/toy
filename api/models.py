@@ -57,11 +57,10 @@ class ItemFile(models.Model):
 class Order(models.Model):
     username = models.CharField(max_length=50,blank=True,null=True,verbose_name='Sargyt ediji')
     phone = models.CharField(max_length=25, verbose_name='telefon belgisi')
-    order_date = models.DateTimeField(auto_now_add=True , verbose_name='senesi')
+    order_date = models.DateTimeField(verbose_name='gerekli senesi')
 
     def __str__(self):
         return self.username
-    
     class Meta:
         db_table = 'order'
         verbose_name = 'sargyt'

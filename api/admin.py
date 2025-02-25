@@ -26,11 +26,21 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('id','item__name','order__username')
-    list_display_links = ('id','item__name','order__username')
-    list_filter = ('order__username',)
-    ordering = ('order__order_date','item__name')
-    search_fields = ('order__username',)
+    list_display = ('id', 'get_order_username', 'get_item_name')
+    list_display_links = ('id', 'get_order_username', 'get_item_name')
+
+    list_filter = ('order',) 
+    ordering = ('order', 'item')  
+    search_fields = ('order__username',)  
+
+    def get_order_username(self, obj):
+        return obj.order.username
+    get_order_username.short_description = 'Sargyt ediji' 
+
+    def get_item_name(self, obj):
+        return obj.item.name
+    get_item_name.short_description = 'Sargydy'
+
     
 admin.site.site_header = 'Toý hyzmatlary ADMIN'
 admin.site.site_title = 'Toý hyzmatlary admin'
