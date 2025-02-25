@@ -43,7 +43,7 @@ class Item(models.Model):
         
 class ItemFile(models.Model):
     file = models.FileField(upload_to='item_files',verbose_name='Element faýllaryny ýükle')
-    item = models.ForeignKey(Item,on_delete=models.PROTECT,verbose_name='Faýl elementini saýla')
+    item = models.ForeignKey(Item,on_delete=models.PROTECT,related_name='files',verbose_name='Faýl elementini saýla')
     
     def __str__(self):
         return self.item.name

@@ -13,22 +13,14 @@ class CategoryNameSerializer(serializers.ModelSerializer):
         model = models.Category
         fields = ('name','slug')
 
-
-class ItemSerializer(serializers.ModelSerializer):
-    category = CategoryNameSerializer()
-    class Meta:
-        model = models.Item
-        fields = ('id','name','category','img','slug')
-
-
-class ItemSerializerWithPrice(serializers.ModelSerializer):
-    category = CategoryNameSerializer()
-    class Meta:
-        model = models.Item
-        fields = ('id','name','price','description','category','img','slug')
-      
-class ItemWithFiles(serializers.ModelSerializer):
-    item = ItemSerializerWithPrice()
+class ItemFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ItemFile
-        fields = ('id','item','file')
+        fields = ['file']  # Sadece dosya URL'sini döndürürüz
+
+class ItemSerializer(serializers.ModelSerializer):
+    files = ItemFileSerializer(many=True, read_only=True)  # Item'a bağlı dosyaları liste olarak alıyoruz
+
+    class Meta:
+        model = models.Item
+        fields = ['id', 'name', 'img', 'category', 'price', 'description', 'slug', 'files'] 
